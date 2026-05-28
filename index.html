@@ -259,31 +259,37 @@ function $id(id){return document.getElementById(id);}
 function today(){return new Date().toISOString().split('T')[0];}
 function isProc(){return ST.data.timing==='Procedura';}
 
-// ── API — JSONP per GET, fetch per POST ────────────────────
-function apiGet(action){
+// ── API — tutto via JSONP (nessun CORS) ───────────────────
+function jsonp(params){
   return new Promise(function(resolve,reject){
     var cb='_cb'+Date.now()+Math.random().toString(36).slice(2);
     var timeout=setTimeout(function(){
       delete window[cb];
       var s=document.getElementById('jsonp-'+cb);if(s)s.remove();
-      reject(new Error('Timeout'));
-    },15000);
+      reject(new Error('Timeout — verifica connessione'));
+    },20000);
     window[cb]=function(data){
       clearTimeout(timeout);delete window[cb];
       var s=document.getElementById('jsonp-'+cb);if(s)s.remove();
       resolve(data);
     };
+    var qs=Object.keys(params).map(function(k){return k+'='+encodeURIComponent(params[k]);}).join('&');
     var s=document.createElement('script');
     s.id='jsonp-'+cb;
-    s.src=API+'?action='+action+'&callback='+cb;
-    s.onerror=function(){clearTimeout(timeout);delete window[cb];s.remove();reject(new Error('Script error'));};
+    s.src=API+'?'+qs+'&callback='+cb;
+    s.onerror=function(){clearTimeout(timeout);delete window[cb];s.remove();reject(new Error('Errore script'));};
     document.head.appendChild(s);
   });
 }
 
+function apiGet(action){ return jsonp({action:action}); }
+
 function apiPost(body){
-  return fetch(API,{method:'POST',body:JSON.stringify(body)})
-    .then(function(r){return r.json();});
+  // Usa JSONP anche per write/update/delete — passa i dati come parametro GET
+  var params={action:body.action};
+  if(body.record) params.record=JSON.stringify(body.record);
+  if(body.id) params.id=body.id;
+  return jsonp(params);
 }
 
 // ── SYNC STATUS ────────────────────────────────────────────
