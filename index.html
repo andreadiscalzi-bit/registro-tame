@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Registro TAME</title>
-<base target="_top">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -68,7 +67,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 
 @media(max-width:500px){.g4{grid-template-columns:1fr 1fr}.g5{grid-template-columns:1fr 1fr}}
 .seg{border:.5px solid var(--border2);border-radius:var(--r);background:var(--bg);font-size:13px;font-weight:500;cursor:pointer;color:var(--text);transition:all .15s;text-align:center;min-height:44px;padding:8px 4px;display:flex;align-items:center;justify-content:center;width:100%;line-height:1.3}
 .seg.sel{background:var(--text);color:var(--bg);border-color:var(--text)}
-.seg.sel-blue{background:var(--blue);color:#fff;border-color:var(--blue)}
 .seg.sel-teal{background:var(--teal);color:#fff;border-color:var(--teal)}
 .timing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:12px}
 .nrs-grid{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
@@ -115,7 +113,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 
 .btn-success{background:#27500a;color:#fff;border-color:#27500a}.btn-success:hover{opacity:.88}
 .btn-amber{background:var(--amber);color:#fff;border-color:var(--amber)}.btn-amber:hover{opacity:.88}
 .btn-purple{background:var(--purple);color:#fff;border-color:var(--purple)}.btn-purple:hover{opacity:.88}
-.btn-teal{background:var(--teal);color:#fff;border-color:var(--teal)}.btn-teal:hover{opacity:.88}
 .alert{padding:11px 13px;border-radius:var(--r);font-size:13px;margin-top:10px;display:flex;gap:8px;align-items:flex-start;line-height:1.4}
 .alert-err{background:var(--red-bg);color:var(--red-dk);border:.5px solid rgba(163,45,45,.2)}
 .alert-ok{background:var(--green-bg);color:var(--green);border:.5px solid rgba(59,109,17,.2)}
@@ -124,7 +121,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 
 .b-blue{background:var(--blue-bg);color:var(--blue-dk)}.b-green{background:var(--green-bg);color:var(--green)}
 .b-amber{background:var(--amber-bg);color:var(--amber)}.b-gray{background:var(--bg2);color:var(--text2)}
 .b-purple{background:var(--purple-bg);color:var(--purple)}.b-teal{background:var(--teal-bg);color:var(--teal)}
-.b-red{background:var(--red-bg);color:var(--red)}
 .p-row{display:flex;align-items:center;gap:12px;padding:12px;border:.5px solid var(--border);border-radius:var(--r);margin-bottom:7px;background:var(--bg);cursor:pointer}
 .p-row:hover{background:var(--bg2)}
 .avatar{width:40px;height:40px;min-width:40px;border-radius:50%;background:var(--blue-bg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--blue-dk)}
@@ -166,7 +162,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 
 .td-r{text-align:right;font-weight:500}
 .td-pos{text-align:right;font-weight:700;color:var(--green)}
 .td-neg{text-align:right;font-weight:700;color:var(--red)}
-.timing-badge-proc{background:var(--teal-bg);color:var(--teal);border:.5px solid var(--teal)}
 </style>
 </head>
 <body>
@@ -182,7 +177,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 
 
 <div class="app">
   <div class="tabs" id="tabs-bar"></div>
-
   <div id="tab-form">
     <div class="card" style="padding:12px 16px">
       <div class="prog-wrap">
@@ -194,21 +188,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 
     <div class="card" id="form-card"></div>
     <div id="alert-area"></div>
   </div>
-
   <div id="tab-list" class="hidden">
     <div class="card">
       <div class="list-toolbar">
         <span style="font-size:16px;font-weight:700">Archivio pazienti</span>
         <div class="toolbar-right" id="list-actions"></div>
       </div>
-      <div class="search-bar">
-        <input type="search" id="search-input" placeholder="Cerca per cognome o nome...">
-      </div>
+      <div class="search-bar"><input type="search" id="search-input" placeholder="Cerca per cognome o nome..."></div>
       <div class="filter-bar" id="filter-bar"></div>
       <div id="patient-list"></div>
     </div>
   </div>
-
   <div id="tab-trend" class="hidden">
     <div class="card">
       <div class="st">Confronto temporale per paziente</div>
@@ -216,9 +206,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 
         <label>Seleziona paziente</label>
         <select id="trend-sel"></select>
       </div>
-      <div id="trend-content">
-        <div class="empty" style="padding:1.5rem 0;font-size:13px">Seleziona un paziente</div>
-      </div>
+      <div id="trend-content"><div class="empty" style="padding:1.5rem 0;font-size:13px">Seleziona un paziente</div></div>
     </div>
   </div>
 </div>
@@ -235,34 +223,25 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-// ── CONFIG ────────────────────────────────────────────────
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyvnFXcNb9WgXsZFUB4EHpn0cM3xxeZurKBKjYhdyMQ1gwoEatnM4XZmLmfEIB9JEGidA/exec';
+// ── CONFIG ─────────────────────────────────────────────────
+var API = 'https://script.google.com/macros/s/AKfycbyvnFXcNb9WgXsZFUB4EHpn0cM3xxeZurKBKjYhdyMQ1gwoEatnM4XZmLmfEIB9JEGidA/exec';
 
-// ── DATI CLINICI ──────────────────────────────────────────
-var QUESTIONARI = {Spalla:['SSV','OSS','QuickDASH'],Gomito:['OES','QuickDASH'],Mano:['QuickDASH'],Anca:['WOMAC'],Ginocchio:['KOOS'],Piede:[]};
-var LATI = ['Destro','Sinistro','Bilaterale','N/A'];
-var PAT = {
-  Spalla:['Artrosi','Tendinosi','Patologia infiammatoria','Patologia reumatica'],
-  Gomito:['Artrosi','Tendinosi','Patologia infiammatoria','Patologia reumatica'],
-  Mano:['Artrosi','Noduli di Heberden','Tendinosi','Patologia infiammatoria','Patologia reumatica'],
-  Anca:['Artrosi','GTPS (borsite trocanterica)','Tendinopatia psoas','Patologia infiammatoria','Patologia reumatica'],
-  Ginocchio:['Gonartrosi mediale','Gonartrosi laterale','Gonartrosi totale','Patologia rotulea','Artrosi','Tendinosi'],
-  Piede:['Artrosi','Fascite plantare','Tendinopatia achillea','Tendinosi','Patologia infiammatoria','Patologia reumatica']
-};
-var SBADGE = {Spalla:'b-blue',Gomito:'b-blue',Mano:'b-gray',Anca:'b-amber',Ginocchio:'b-green',Piede:'b-amber'};
-var TIMINGS_VALUTAZIONE = ['Pre-procedura','1 mese','3 mesi','6 mesi','12 mesi'];
-var TIMING_ORDER = ['Pre-procedura','Procedura','1 mese','3 mesi','6 mesi','12 mesi'];
-var NRS_LABEL = ['Nessun dolore','Molto lieve','Lieve','Lieve-moderato','Moderato','Moderato','Moderato-forte','Forte','Forte','Molto forte','Massimo'];
-
-var OSS_Q = ['Come descriverebbe il suo peggior dolore alla spalla?','Ha avuto problemi a vestirsi per via della spalla?','Ha avuto problemi ad entrare/uscire dall\'auto o usare mezzi pubblici?','Riesce ad utilizzare forchetta e coltello nello stesso tempo?','E\' in grado di eseguire le commissioni di casa da solo/a?','E\' in grado di camminare con un vassoio in mano?','E\' in grado di pettinarsi/spazzolarsi con l\'arto malato?','Come descriverebbe il dolore normalmente percepito alla spalla?','E\' in grado di appendere i vestiti nel guardaroba con l\'arto malato?','E\' in grado di lavarsi ed asciugarsi sotto le ascelle?','Quanto ha interferito il dolore con le attivita\' quotidiane?','La spalla le ha dato fastidio a letto durante la notte?'];
-var OSS_O = [['Insopportabile','Importante','Moderato','Lieve','Assente'],['Si\', impossibile vestirmi','Molti problemi','Moderatamente','Un pochino','Assolutamente no'],['Si\', impossibile','Molti problemi','Moderatamente','Qualche problema','Nessun problema'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['Severo','Moderato','Lieve','Molto lieve','Assente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['Totalmente','Molto','Moderatamente','Un pochino','Non ha interferito'],['Ogni notte','La maggior parte delle notti','Alcune notti','Solo 1-2 notti','Mai']];
-var OES_Q = ['Ha avuto difficolta\' a sollevare oggetti in casa?','Ha avuto difficolta\' a trasportare borse della spesa?','Ha avuto difficolta\' a lavarsi tutto il corpo?','Ha avuto difficolta\' a vestirsi?','Ha avuto la sensazione che il gomito controllasse la sua vita?','Quanto spesso ha pensato al suo problema al gomito?','Ha avuto dolore al gomito durante la notte?','Quanto spesso il gomito ha interferito con il sonno?','Quanto il gomito ha interferito con il lavoro o le attivita\' quotidiane?','Il problema al gomito ha limitato le attivita\' di svago?','Come descriverebbe il peggior dolore al gomito?','Come descriverebbe il dolore che di solito prova al gomito?'];
-var OES_O = [['Impossibile da fare','Grave difficolta\'','Moderata difficolta\'','Una piccola difficolta\'','Nessuna difficolta\''],['Impossibile da fare','Grave difficolta\'','Moderata difficolta\'','Una piccola difficolta\'','Nessuna difficolta\''],['Impossibile da fare','Grave difficolta\'','Moderata difficolta\'','Una piccola difficolta\'','Nessuna difficolta\''],['Impossibile da fare','Grave difficolta\'','Moderata difficolta\'','Una piccola difficolta\'','Nessuna difficolta\''],['Ogni giorno','La maggior parte dei giorni','Alcuni giorni','Occasionalmente','Per niente'],['Sempre','La maggior parte del tempo','Parte del tempo','Un po\'','Mai'],['Ogni notte','La maggior parte delle notti','Alcune notti','1 o 2 notti','Mai'],['Sempre','La maggior parte del tempo','Parte del tempo','Occasionalmente','Mai'],['Totale','Molto','Moderatamente','Un po\'','Per niente'],['Sempre','La maggior parte del tempo','Parte del tempo','Occasionalmente','Per niente'],['Insopportabile','Dolore severo','Dolore moderato','Dolore lieve','Nessun dolore'],['Insopportabile','Dolore severo','Dolore moderato','Dolore lieve','Nessun dolore']];
-var QD_Q = ['Aprire un barattolo ben chiuso o nuovo','Fare lavori domestici pesanti','Portare la borsa della spesa o una ventiquattrore','Lavarsi la schiena','Usare un coltello per tagliare del cibo','Attivita\' ricreative con forza/colpi su braccio, spalla o mano','Interferenza con attivita\' sociali nella settimana passata','Limitazione nel lavoro o attivita\' quotidiane nella settimana passata','Dolore al braccio, spalla o mano','Formicolio al braccio, spalla o mano','Difficolta\' a dormire per dolore al braccio, spalla o mano'];
-var QD_O = [['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Per nulla','Molto poco','Un po\'','Molto','Moltissimo'],['Non mi ha limitato','Leggermente','Discretamente','Molto','Non ci sono riuscito/a'],['Nessuno','Lieve','Discreto','Forte','Estremo'],['Nessuno','Lieve','Discreto','Forte','Estremo'],['Nessuna','Lieve','Discreta','Notevole','Non sono riuscito/a a dormire']];
-var WO_SECS = [{k:'D',label:'Dolore (5 item)',items:['Camminare','Salire le scale','Notturno','A riposo','Sotto carico']},{k:'R',label:'Rigidita\' (2 item)',items:['Rigidita\' mattutina','Rigidita\' durante il giorno']},{k:'F',label:'Funzione fisica (17 item)',items:['Scendere le scale','Salire le scale','Alzarsi da seduto','Stare in piedi','Piegarsi a terra','Camminare in piano','Entrare/uscire dall\'auto','Fare la spesa','Indossare i calzini','Sdraiarsi a letto','Togliere i calzini','Alzarsi dal letto','Entrare/uscire dalla vasca','Sedersi','Sedersi/rialzarsi dal water','Lavori domestici pesanti','Lavori domestici leggeri']}];
-var WO_O = ['Nessuna','Leggera','Moderata','Intensa','Estrema'];
-var KO_SECS = [
+// ── DATI CLINICI ───────────────────────────────────────────
+var QUESTIONARI={Spalla:['SSV','OSS','QuickDASH'],Gomito:['OES','QuickDASH'],Mano:['QuickDASH'],Anca:['WOMAC'],Ginocchio:['KOOS'],Piede:[]};
+var LATI=['Destro','Sinistro','Bilaterale','N/A'];
+var PAT={Spalla:['Artrosi','Tendinosi','Patologia infiammatoria','Patologia reumatica'],Gomito:['Artrosi','Tendinosi','Patologia infiammatoria','Patologia reumatica'],Mano:['Artrosi','Noduli di Heberden','Tendinosi','Patologia infiammatoria','Patologia reumatica'],Anca:['Artrosi','GTPS (borsite trocanterica)','Tendinopatia psoas','Patologia infiammatoria','Patologia reumatica'],Ginocchio:['Gonartrosi mediale','Gonartrosi laterale','Gonartrosi totale','Patologia rotulea','Artrosi','Tendinosi'],Piede:['Artrosi','Fascite plantare','Tendinopatia achillea','Tendinosi','Patologia infiammatoria','Patologia reumatica']};
+var SBADGE={Spalla:'b-blue',Gomito:'b-blue',Mano:'b-gray',Anca:'b-amber',Ginocchio:'b-green',Piede:'b-amber'};
+var TIMING_ORDER=['Pre-procedura','Procedura','1 mese','3 mesi','6 mesi','12 mesi'];
+var NRS_LABEL=['Nessun dolore','Molto lieve','Lieve','Lieve-moderato','Moderato','Moderato','Moderato-forte','Forte','Forte','Molto forte','Massimo'];
+var OSS_Q=['Come descriverebbe il suo peggior dolore alla spalla?','Ha avuto problemi a vestirsi per via della spalla?','Ha avuto problemi ad entrare/uscire dall\'auto o usare mezzi pubblici?','Riesce ad utilizzare forchetta e coltello nello stesso tempo?','E\' in grado di eseguire le commissioni di casa da solo/a?','E\' in grado di camminare con un vassoio in mano?','E\' in grado di pettinarsi/spazzolarsi con l\'arto malato?','Come descriverebbe il dolore normalmente percepito alla spalla?','E\' in grado di appendere i vestiti nel guardaroba con l\'arto malato?','E\' in grado di lavarsi ed asciugarsi sotto le ascelle?','Quanto ha interferito il dolore con le attivita\' quotidiane?','La spalla le ha dato fastidio a letto durante la notte?'];
+var OSS_O=[['Insopportabile','Importante','Moderato','Lieve','Assente'],['Si\', impossibile vestirmi','Molti problemi','Moderatamente','Un pochino','Assolutamente no'],['Si\', impossibile','Molti problemi','Moderatamente','Qualche problema','Nessun problema'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['Severo','Moderato','Lieve','Molto lieve','Assente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['No','Estrema difficolta\'','Moderata difficolta\'','Qualche difficolta\'','Si\', facilmente'],['Totalmente','Molto','Moderatamente','Un pochino','Non ha interferito'],['Ogni notte','La maggior parte delle notti','Alcune notti','Solo 1-2 notti','Mai']];
+var OES_Q=['Ha avuto difficolta\' a sollevare oggetti in casa?','Ha avuto difficolta\' a trasportare borse della spesa?','Ha avuto difficolta\' a lavarsi tutto il corpo?','Ha avuto difficolta\' a vestirsi?','Ha avuto la sensazione che il gomito controllasse la sua vita?','Quanto spesso ha pensato al suo problema al gomito?','Ha avuto dolore al gomito durante la notte?','Quanto spesso il gomito ha interferito con il sonno?','Quanto il gomito ha interferito con il lavoro o le attivita\' quotidiane?','Il problema al gomito ha limitato le attivita\' di svago?','Come descriverebbe il peggior dolore al gomito?','Come descriverebbe il dolore che di solito prova al gomito?'];
+var OES_O=[['Impossibile da fare','Grave difficolta\'','Moderata difficolta\'','Una piccola difficolta\'','Nessuna difficolta\''],['Impossibile da fare','Grave difficolta\'','Moderata difficolta\'','Una piccola difficolta\'','Nessuna difficolta\''],['Impossibile da fare','Grave difficolta\'','Moderata difficolta\'','Una piccola difficolta\'','Nessuna difficolta\''],['Impossibile da fare','Grave difficolta\'','Moderata difficolta\'','Una piccola difficolta\'','Nessuna difficolta\''],['Ogni giorno','La maggior parte dei giorni','Alcuni giorni','Occasionalmente','Per niente'],['Sempre','La maggior parte del tempo','Parte del tempo','Un po\'','Mai'],['Ogni notte','La maggior parte delle notti','Alcune notti','1 o 2 notti','Mai'],['Sempre','La maggior parte del tempo','Parte del tempo','Occasionalmente','Mai'],['Totale','Molto','Moderatamente','Un po\'','Per niente'],['Sempre','La maggior parte del tempo','Parte del tempo','Occasionalmente','Per niente'],['Insopportabile','Dolore severo','Dolore moderato','Dolore lieve','Nessun dolore'],['Insopportabile','Dolore severo','Dolore moderato','Dolore lieve','Nessun dolore']];
+var QD_Q=['Aprire un barattolo ben chiuso o nuovo','Fare lavori domestici pesanti','Portare la borsa della spesa o una ventiquattrore','Lavarsi la schiena','Usare un coltello per tagliare del cibo','Attivita\' ricreative con forza/colpi su braccio, spalla o mano','Interferenza con attivita\' sociali nella settimana passata','Limitazione nel lavoro o attivita\' quotidiane nella settimana passata','Dolore al braccio, spalla o mano','Formicolio al braccio, spalla o mano','Difficolta\' a dormire per dolore al braccio, spalla o mano'];
+var QD_O=[['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Nessuna','Lieve','Discreta','Notevole','Non ci sono riuscito/a'],['Per nulla','Molto poco','Un po\'','Molto','Moltissimo'],['Non mi ha limitato','Leggermente','Discretamente','Molto','Non ci sono riuscito/a'],['Nessuno','Lieve','Discreto','Forte','Estremo'],['Nessuno','Lieve','Discreto','Forte','Estremo'],['Nessuna','Lieve','Discreta','Notevole','Non sono riuscito/a a dormire']];
+var WO_SECS=[{k:'D',label:'Dolore (5 item)',items:['Camminare','Salire le scale','Notturno','A riposo','Sotto carico']},{k:'R',label:'Rigidita\' (2 item)',items:['Rigidita\' mattutina','Rigidita\' durante il giorno']},{k:'F',label:'Funzione fisica (17 item)',items:['Scendere le scale','Salire le scale','Alzarsi da seduto','Stare in piedi','Piegarsi a terra','Camminare in piano','Entrare/uscire dall\'auto','Fare la spesa','Indossare i calzini','Sdraiarsi a letto','Togliere i calzini','Alzarsi dal letto','Entrare/uscire dalla vasca','Sedersi','Sedersi/rialzarsi dal water','Lavori domestici pesanti','Lavori domestici leggeri']}];
+var WO_O=['Nessuna','Leggera','Moderata','Intensa','Estrema'];
+var KO_SECS=[
   {k:'S',label:'Sintomi (7 item)',q:['Il suo ginocchio tende a gonfiarsi?','Avverte crepitii o altri rumori quando muove il ginocchio?','Il suo ginocchio si blocca quando si muove?','Riesce ad estendere il ginocchio completamente?','Riesce a piegare il ginocchio completamente?','Qual e\' la rigidita\' del suo ginocchio appena sveglio/a?','Qual e\' la rigidita\' del suo ginocchio quando e\' a riposo?'],o:function(i){return i===3||i===4?['Sempre','Spesso','Qualche volta','Raramente','Mai']:i>=5?['Nessuna','Lieve','Di media intensita\'','Severa','Grave']:['Mai','Raramente','Qualche volta','Spesso','Sempre'];}},
   {k:'P',label:'Dolore (9 item)',q:['Con quale frequenza ha dolore al ginocchio?','Torcere/fare perno sul ginocchio','Estendere completamente il ginocchio','Flettere completamente il ginocchio','Camminare su superfici piane','Salire o scendere le scale','La notte, stando a letto','Rimanere seduto o sdraiato','Rimanere in posizione eretta'],o:function(i){return i===0?['Mai','1 volta al mese','1 volta alla settimana','Ogni giorno','Sempre']:['Nessuno','Lieve','Di media intensita\'','Severo','Insopportabile'];}},
   {k:'A',label:'Attivita\' quotidiane (17 item)',q:['Scendere le scale','Salire le scale','Alzarsi da seduto','Stare in piedi','Flettersi verso il pavimento','Camminare su superfici piane','Salire/scendere dalla macchina','Fare spese','Indossare le calze','Alzarsi dal letto','Sfilare le calze','Stendersi a letto','Entrare/uscire dalla vasca','Sedersi','Alzarsi/sedersi sul WC','Lavori domestici pesanti','Lavori domestici leggeri'],o:function(){return['Nessuno','Lieve','Medio','Intenso','Molto intenso'];}},
@@ -270,27 +249,45 @@ var KO_SECS = [
   {k:'Q',label:'Qualita\' di vita (4 item)',q:['Quanto spesso si accorge di avere problemi al ginocchio?','Ha modificato il suo stile di vita per evitare attivita\' dannose per il ginocchio?','Quanto e\' preoccupato/a della mancanza di sicurezza del suo ginocchio?','In generale, i problemi del suo ginocchio quanta difficolta\' creano?'],o:function(i){return[['Mai','1 volta al mese','1 volta alla settimana','Ogni giorno','Sempre'],['No, per nulla','Un poco','Parzialmente','Molto','Del tutto'],['Per nulla','Un poco','Parzialmente','Molto','Del tutto'],['Nessuna','Lieve','Media','Elevata','Estrema']][i];}}
 ];
 
-// ── STATE ─────────────────────────────────────────────────
-var ST = {step:0, data:{}, proc:{}, answers:{}, editingId:null};
-var currentTab = 'form';
-var filterSede = 'Tutti';
-var allPatients = [];
-var trendChart = null;
+// ── STATE ──────────────────────────────────────────────────
+var ST={step:0,data:{},proc:{},answers:{},editingId:null};
+var currentTab='form',filterSede='Tutti',allPatients=[],trendChart=null;
 
 // ── UTILS ──────────────────────────────────────────────────
 function mk(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
 function $id(id){return document.getElementById(id);}
 function today(){return new Date().toISOString().split('T')[0];}
-function isProcedura(){return ST.data.timing==='Procedura';}
+function isProc(){return ST.data.timing==='Procedura';}
 
-// ── SYNC ───────────────────────────────────────────────────
+// ── API — JSONP per GET, fetch per POST ────────────────────
+function apiGet(action){
+  return new Promise(function(resolve,reject){
+    var cb='_cb'+Date.now()+Math.random().toString(36).slice(2);
+    var timeout=setTimeout(function(){
+      delete window[cb];
+      var s=document.getElementById('jsonp-'+cb);if(s)s.remove();
+      reject(new Error('Timeout'));
+    },15000);
+    window[cb]=function(data){
+      clearTimeout(timeout);delete window[cb];
+      var s=document.getElementById('jsonp-'+cb);if(s)s.remove();
+      resolve(data);
+    };
+    var s=document.createElement('script');
+    s.id='jsonp-'+cb;
+    s.src=API+'?action='+action+'&callback='+cb;
+    s.onerror=function(){clearTimeout(timeout);delete window[cb];s.remove();reject(new Error('Script error'));};
+    document.head.appendChild(s);
+  });
+}
+
+function apiPost(body){
+  return fetch(API,{method:'POST',body:JSON.stringify(body)})
+    .then(function(r){return r.json();});
+}
+
+// ── SYNC STATUS ────────────────────────────────────────────
 function setSS(state,text){$id('sync-dot').className='sync-dot '+state;$id('sync-txt').textContent=text;}
-
-// ── google.script.run ──────────────────────────────────────
-function gsRead(){return new Promise(function(res,rej){google.script.run.withSuccessHandler(res).withFailureHandler(rej).serverRead();});}
-function gsWrite(rec){return new Promise(function(res,rej){google.script.run.withSuccessHandler(res).withFailureHandler(rej).serverWrite(rec);});}
-function gsUpdate(rec){return new Promise(function(res,rej){google.script.run.withSuccessHandler(res).withFailureHandler(rej).serverUpdate(rec);});}
-function gsDelete(id){return new Promise(function(res,rej){google.script.run.withSuccessHandler(res).withFailureHandler(rej).serverDelete(id);});}
 
 function normalizeRecord(r){
   var nums=['nrs','ssv','oss','quickdash','oes_total','oes_func','oes_pain','oes_soc','womac_D','womac_R','womac_F','womac_tot','womac_pct','koos_sym','koos_pain','koos_adl','koos_sport','koos_qol','koos_total','proc_arterie','proc_volume_ml','proc_durata_min','proc_kl'];
@@ -302,13 +299,16 @@ function normalizeRecord(r){
 async function loadFromSheet(){
   setSS('spin','caricamento...');
   try{
-    var res=await gsRead();
+    var res=await apiGet('read');
     if(res&&res.status==='ok'){
       allPatients=res.data.map(normalizeRecord);
       setSS('ok',allPatients.length+' record');
       updateCnt(allPatients.length);
     } else throw new Error(res?res.data:'errore');
-  }catch(e){setSS('err','errore connessione');console.error('loadFromSheet error:',e);}
+  }catch(e){
+    setSS('err','errore connessione');
+    console.error('load error:',e);
+  }
 }
 
 // ── TABS ───────────────────────────────────────────────────
@@ -339,17 +339,11 @@ function showAlert(msg,type){
 }
 
 // ── STEPS ──────────────────────────────────────────────────
-// La logica dei step dipende dal timing selezionato:
-// - Procedura: Anagrafica → Distretto → Dati Procedura → Riepilogo
-// - Pre-procedura / Follow-up: Anagrafica → Distretto → NRS → [Questionari] → Riepilogo
 function getSteps(){
-  if(isProcedura()){
-    return ['Anagrafica','Distretto & timing','Procedura','Riepilogo'];
-  }
+  if(isProc())return['Anagrafica','Distretto & timing','Procedura','Riepilogo'];
   var q=ST.data.sede?QUESTIONARI[ST.data.sede]:[];
-  return ['Anagrafica','Distretto & timing','NRS'].concat(q).concat(['Riepilogo']);
+  return['Anagrafica','Distretto & timing','NRS'].concat(q).concat(['Riepilogo']);
 }
-
 function renderPips(){
   var steps=getSteps(),s=ST.step;
   $id('step-label').textContent=(s+1)+'/'+steps.length+' - '+steps[s];
@@ -380,7 +374,6 @@ function buildQBlock(prefix,idx,question,opts){
   block.appendChild(optsDiv);
   return block;
 }
-
 function refreshLiveScore(){
   var sn=getSteps()[ST.step],live=document.querySelector('.score-live');
   if(!live)return;live.innerHTML='';
@@ -390,7 +383,6 @@ function refreshLiveScore(){
   if(sn==='WOMAC'){var sc3=calcWO();if(sc3)live.appendChild(buildDomains([{n:'Dolore',v:sc3.D},{n:'Rigidita\'',v:sc3.R},{n:'Funzione',v:sc3.F},{n:'Tot %',v:sc3.pct,suffix:'%',hi:true}]));}
   if(sn==='KOOS'){var sc4=calcKO();if(sc4)live.appendChild(buildDomains([{n:'Symptoms',v:sc4.sym},{n:'Pain',v:sc4.pain},{n:'ADL',v:sc4.adl},{n:'Sport',v:sc4.sport},{n:'QOL',v:sc4.qol},{n:'Media',v:sc4.total,hi:true}]));}
 }
-
 function buildScoreBar(val,max,label,sub){
   var bar=mk('div','score-bar');
   var big=mk('div','score-big',String(val));big.appendChild(mk('span','score-max','/'+max));
@@ -417,7 +409,6 @@ function renderStep(){
   var bw=$id('edit-banner-wrap');bw.innerHTML='';
   if(ST.editingId)bw.appendChild(mk('div','edit-banner','Stai modificando un record esistente.'));
   card.appendChild(buildStepContent(sn));
-  // Nav
   var nav=mk('div','step-nav');
   var back=mk('button','btn btn-ghost','< Indietro');
   if(ST.step===0)back.style.visibility='hidden';
@@ -426,13 +417,10 @@ function renderStep(){
   var steps=getSteps();
   if(ST.step===steps.length-1){
     var sub=mk('button','btn btn-success',ST.editingId?'Aggiorna':'Archivia');
-    sub.id='submit-btn';
-    sub.addEventListener('click',submitForm);
-    nav.appendChild(sub);
+    sub.id='submit-btn';sub.addEventListener('click',submitForm);nav.appendChild(sub);
   } else {
     var nxt=mk('button','btn btn-primary','Avanti >');
-    nxt.addEventListener('click',function(){goStep(ST.step+1);});
-    nav.appendChild(nxt);
+    nxt.addEventListener('click',function(){goStep(ST.step+1);});nav.appendChild(nxt);
   }
   card.appendChild(nav);
 }
@@ -440,31 +428,25 @@ function renderStep(){
 function buildStepContent(sn){
   var wrap=mk('div','');
 
-  // ── ANAGRAFICA ────────────────────────────────────────
   if(sn==='Anagrafica'){
-    // Richiamo paziente esistente
+    // Richiamo paziente
     var nameMap={};
-    allPatients.forEach(function(p){
-      var k=(p.cognome||'')+' '+(p.nome||'');k=k.trim();
-      if(k&&!nameMap[k])nameMap[k]={cognome:p.cognome,nome:p.nome,sesso:p.sesso,dob:p.dob};
-    });
+    allPatients.forEach(function(p){var k=((p.cognome||'')+' '+(p.nome||'')).trim();if(k&&!nameMap[k])nameMap[k]={cognome:p.cognome,nome:p.nome,sesso:p.sesso,dob:p.dob};});
     var names=Object.keys(nameMap).sort();
     if(names.length>0){
-      var rbox=mk('div','recall-box');
-      rbox.appendChild(mk('div','st','Richiama paziente esistente'));
+      var rbox=mk('div','recall-box');rbox.appendChild(mk('div','st','Richiama paziente esistente'));
       var rf=mk('div','field');
       var rsel=document.createElement('select');rsel.id='recall-sel';
       var def=document.createElement('option');def.value='';def.textContent='— Nuovo paziente —';rsel.appendChild(def);
       names.forEach(function(name){
         var opt=document.createElement('option');opt.value=name;opt.textContent=name;
-        if(ST.data.cognome&&name===(ST.data.cognome+' '+ST.data.nome).trim())opt.selected=true;
+        if(ST.data.cognome&&name===((ST.data.cognome||'')+' '+(ST.data.nome||'')).trim())opt.selected=true;
         rsel.appendChild(opt);
       });
       rsel.addEventListener('change',function(){
         var v=this.value;
         if(!v){ST.data.cognome='';ST.data.nome='';ST.data.sesso='';ST.data.dob='';ST.editingId=null;renderStep();return;}
-        var p=nameMap[v];
-        ST.data.cognome=p.cognome||'';ST.data.nome=p.nome||'';ST.data.sesso=p.sesso||'';ST.data.dob=p.dob||'';
+        var p=nameMap[v];ST.data.cognome=p.cognome||'';ST.data.nome=p.nome||'';ST.data.sesso=p.sesso||'';ST.data.dob=p.dob||'';
         renderStep();
       });
       rf.appendChild(rsel);rbox.appendChild(rf);wrap.appendChild(rbox);
@@ -481,98 +463,70 @@ function buildStepContent(sn){
     wrap.appendChild(r3);
   }
 
-  // ── DISTRETTO & TIMING ────────────────────────────────
   else if(sn==='Distretto & timing'){
     var sedi=['Spalla','Gomito','Mano','Anca','Ginocchio','Piede'];
     wrap.appendChild(mk('div','st','Distretto trattato'));
     var sg=mk('div','g3');
     sedi.forEach(function(s){
       var btn=mk('button','seg'+(ST.data.sede===s?' sel':''),s);
-      btn.addEventListener('click',function(){
-        if(ST.data.sede!==s){ST.data.patologia='';ST.answers={};}
-        ST.data.sede=s;renderStep();
-      });
+      btn.addEventListener('click',function(){if(ST.data.sede!==s){ST.data.patologia='';ST.answers={};}ST.data.sede=s;renderStep();});
       sg.appendChild(btn);
     });
     wrap.appendChild(sg);
-
     if(ST.data.sede){
-      // LATO
+      // Lato
       var latoSt=mk('div','st','Lato');latoSt.style.marginTop='12px';wrap.appendChild(latoSt);
       var lg=mk('div','g4');
       LATI.forEach(function(l){
         var btn=mk('button','seg'+(ST.data.lato===l?' sel':''),l);
-        btn.addEventListener('click',function(){ST.data.lato=l;renderStep();});
-        lg.appendChild(btn);
+        btn.addEventListener('click',function(){ST.data.lato=l;renderStep();});lg.appendChild(btn);
       });
       wrap.appendChild(lg);
-
-      // PATOLOGIA
+      // Patologia
       wrap.appendChild(mk('div','st','Patologia'));
-      var pOpts=[''].concat(PAT[ST.data.sede]);
-      var pLabels=['— seleziona —'].concat(PAT[ST.data.sede]);
-      wrap.appendChild(buildSelectField('','f-pat',pOpts,pLabels,ST.data.patologia||'',false));
-
-      // TIMING — include Procedura
-      var timingSt=mk('div','st','Timing');timingSt.style.marginTop='14px';wrap.appendChild(timingSt);
-      // Nota esplicativa
+      wrap.appendChild(buildSelectField('','f-pat',[''].concat(PAT[ST.data.sede]),['— seleziona —'].concat(PAT[ST.data.sede]),ST.data.patologia||'',false));
+      // Timing
+      var tSt=mk('div','st','Timing');tSt.style.marginTop='14px';wrap.appendChild(tSt);
       var tn=mk('div','');tn.style.cssText='font-size:12px;color:var(--text2);margin-bottom:10px';
-      tn.textContent='Seleziona "Procedura" per registrare i dati tecnici dell\'intervento.';
-      wrap.appendChild(tn);
-      // Tutti i timing in un'unica griglia
-      var allTimings=['Pre-procedura','Procedura'].concat(TIMINGS_VALUTAZIONE.slice(1));
+      tn.textContent='Seleziona "Procedura" per registrare i dati tecnici dell\'intervento.';wrap.appendChild(tn);
       var tg=mk('div','timing-grid');
-      allTimings.forEach(function(t){
-        var isProc=t==='Procedura';
-        var cls='seg'+(ST.data.timing===t?(isProc?' sel-teal':' sel'):'');
-        var btn=mk('button',cls,t);
-        btn.addEventListener('click',function(){
-          ST.data.timing=t;
-          if(isProc){ST.answers={};}
-          renderStep();
-        });
+      ['Pre-procedura','Procedura','1 mese','3 mesi','6 mesi','12 mesi'].forEach(function(t){
+        var isP=t==='Procedura';
+        var btn=mk('button','seg'+(ST.data.timing===t?(isP?' sel-teal':' sel'):''),t);
+        btn.addEventListener('click',function(){ST.data.timing=t;if(isP)ST.answers={};renderStep();});
         tg.appendChild(btn);
       });
       wrap.appendChild(tg);
-
-      if(ST.data.timing&&ST.data.timing!=='Procedura'){
+      if(ST.data.timing&&!isProc()){
         var qinfo=mk('div','');qinfo.style.cssText='margin-top:10px;font-size:12px;color:var(--text2)';
         var q=QUESTIONARI[ST.data.sede];
-        qinfo.textContent='Questionari: '+(q.length?q.join(', '):'Solo NRS');
-        wrap.appendChild(qinfo);
+        qinfo.textContent='Questionari: '+(q.length?q.join(', '):'Solo NRS');wrap.appendChild(qinfo);
       }
     } else {
-      var hint=mk('div','empty','Seleziona un distretto per continuare');hint.style.padding='1.2rem 0';wrap.appendChild(hint);
+      var hint=mk('div','empty','Seleziona un distretto');hint.style.padding='1.2rem 0';wrap.appendChild(hint);
     }
   }
 
-  // ── PROCEDURA ─────────────────────────────────────────
   else if(sn==='Procedura'){
     var p=ST.proc;
-    // Data procedura
     wrap.appendChild(mk('div','st','Dati procedura TAME'));
     wrap.appendChild(buildField('Data procedura','p-datproc','date',p.data_procedura||today(),'',false));
-
     // Accesso
     var accSt=mk('div','st','Accesso vascolare');accSt.style.marginTop='4px';wrap.appendChild(accSt);
     var ag=mk('div','g3');
     ['Femorale','Radiale','Altro'].forEach(function(a){
       var btn=mk('button','seg'+(p.accesso===a?' sel':''),a);
-      btn.addEventListener('click',function(){ST.proc.accesso=a;renderStep();});
-      ag.appendChild(btn);
+      btn.addEventListener('click',function(){ST.proc.accesso=a;renderStep();});ag.appendChild(btn);
     });
     wrap.appendChild(ag);
-
-    // Successo tecnico
+    // Successo
     var stSt=mk('div','st','Successo tecnico');stSt.style.marginTop='12px';wrap.appendChild(stSt);
     var stg=mk('div','g3');
     ['Si\'','Parziale','No'].forEach(function(v){
       var btn=mk('button','seg'+(p.successo===v?' sel':''),v);
-      btn.addEventListener('click',function(){ST.proc.successo=v;renderStep();});
-      stg.appendChild(btn);
+      btn.addEventListener('click',function(){ST.proc.successo=v;renderStep();});stg.appendChild(btn);
     });
     wrap.appendChild(stg);
-
     // Dati quantitativi
     var qSt=mk('div','st','Dati quantitativi');qSt.style.marginTop='12px';wrap.appendChild(qSt);
     var qg=mk('div','r3');
@@ -580,104 +534,69 @@ function buildStepContent(sn){
     qg.appendChild(buildNumField('Volume IPM/CS (ml)','p-volume',p.volume_ml!==undefined?p.volume_ml:'','es. 1.5'));
     qg.appendChild(buildNumField('Durata (min)','p-durata',p.durata_min!==undefined?p.durata_min:'','es. 45'));
     wrap.appendChild(qg);
-
-    // Sede-specifici
+    // Ginocchio
     if(ST.data.sede==='Ginocchio'){
       var klSt=mk('div','st','Kellgren-Lawrence');klSt.style.marginTop='12px';wrap.appendChild(klSt);
       var klg=mk('div','g5');
       [1,2,3,4,'N/A'].forEach(function(v){
         var label=v==='N/A'?'N/A':'KL'+v;
-        var curKL=p.kl!==undefined&&p.kl!==''?p.kl:'';
-        var isSel=(v==='N/A'&&curKL==='')?(false):(String(curKL)===String(v));
+        var isSel=v==='N/A'?(p.kl===''||p.kl===undefined):(Number(p.kl)===v);
         var btn=mk('button','seg'+(isSel?' sel':''),label);
-        btn.addEventListener('click',function(){ST.proc.kl=v==='N/A'?'':v;renderStep();});
-        klg.appendChild(btn);
+        btn.addEventListener('click',function(){ST.proc.kl=v==='N/A'?'':v;renderStep();});klg.appendChild(btn);
       });
       wrap.appendChild(klg);
-      wrap.appendChild(buildSelectField('Pregresso intervento/protesi','p-pregresso',
-        ['','No','Artroscopia','Protesi totale di ginocchio','Protesi parziale','Altro'],
-        ['— seleziona —','No','Artroscopia','Protesi totale di ginocchio','Protesi parziale','Altro'],
-        p.pregresso_intervento||'',false));
+      wrap.appendChild(buildSelectField('Pregresso intervento/protesi','p-pregresso',['','No','Artroscopia','Protesi totale di ginocchio','Protesi parziale','Altro'],['— seleziona —','No','Artroscopia','Protesi totale di ginocchio','Protesi parziale','Altro'],p.pregresso_intervento||'',false));
     }
-
+    // Anca
     if(ST.data.sede==='Anca'){
-      wrap.appendChild(buildSelectField('Diagnosi specifica','p-diagspec',
-        ['','Coxartrosi','GTPS (borsite trocanterica)','Tendinopatia psoas','Altro'],
-        ['— seleziona —','Coxartrosi','GTPS (borsite trocanterica)','Tendinopatia psoas','Altro'],
-        p.diagnosi_specifica||'',false));
+      wrap.appendChild(buildSelectField('Diagnosi specifica','p-diagspec',['','Coxartrosi','GTPS (borsite trocanterica)','Tendinopatia psoas','Altro'],['— seleziona —','Coxartrosi','GTPS (borsite trocanterica)','Tendinopatia psoas','Altro'],p.diagnosi_specifica||'',false));
     }
-
     // Fibromialgia
     var fibSt=mk('div','st','Fibromialgia');fibSt.style.marginTop='12px';wrap.appendChild(fibSt);
     var fibg=mk('div','g3');
     ['Si\'','No','Non valutata'].forEach(function(v){
       var btn=mk('button','seg'+(p.fibromialgia===v?' sel':''),v);
-      btn.addEventListener('click',function(){ST.proc.fibromialgia=v;renderStep();});
-      fibg.appendChild(btn);
+      btn.addEventListener('click',function(){ST.proc.fibromialgia=v;renderStep();});fibg.appendChild(btn);
     });
     wrap.appendChild(fibg);
-
     // Complicanze
     var compSt=mk('div','st','Complicanze');compSt.style.marginTop='12px';wrap.appendChild(compSt);
-    var comps=['Nessuna','Ematoma accesso','Dolore post-proc.','Sindrome post-embolizzazione','Altra'];
-    var compg=mk('div','g3');
-    // Prima riga: 3 bottoni
-    comps.slice(0,3).forEach(function(v){
+    var cg1=mk('div','g3');
+    ['Nessuna','Ematoma accesso','Dolore post-proc.'].forEach(function(v){
       var btn=mk('button','seg'+(p.complicanze===v?' sel':''),v);
-      btn.addEventListener('click',function(){ST.proc.complicanze=v;renderStep();});
-      compg.appendChild(btn);
+      btn.addEventListener('click',function(){ST.proc.complicanze=v;renderStep();});cg1.appendChild(btn);
     });
-    wrap.appendChild(compg);
-    var compg2=mk('div','g2');
-    comps.slice(3).forEach(function(v){
+    wrap.appendChild(cg1);
+    var cg2=mk('div','g2');
+    ['Sindrome post-embolizzazione','Altra'].forEach(function(v){
       var btn=mk('button','seg'+(p.complicanze===v?' sel':''),v);
-      btn.addEventListener('click',function(){ST.proc.complicanze=v;renderStep();});
-      compg2.appendChild(btn);
+      btn.addEventListener('click',function(){ST.proc.complicanze=v;renderStep();});cg2.appendChild(btn);
     });
-    wrap.appendChild(compg2);
-
+    wrap.appendChild(cg2);
     // Note
     var noteSt=mk('div','st','Note procedura (opzionale)');noteSt.style.marginTop='12px';wrap.appendChild(noteSt);
-    var noteField=mk('div','field');
-    var noteArea=document.createElement('textarea');noteArea.id='p-note';
-    noteArea.placeholder='Arterie specifiche trattate, varianti tecniche, osservazioni...';
-    noteArea.value=p.note||'';
-    noteField.appendChild(noteArea);wrap.appendChild(noteField);
+    var nf=mk('div','field');
+    var na=document.createElement('textarea');na.id='p-note';na.placeholder='Arterie specifiche, varianti tecniche, osservazioni...';na.value=p.note||'';
+    nf.appendChild(na);wrap.appendChild(nf);
   }
 
-  // ── NRS ───────────────────────────────────────────────
   else if(sn==='NRS'){
     wrap.appendChild(mk('div','st','NRS - Intensita\' del dolore (0-10)'));
-    var sub=mk('p','','0 = nessun dolore     10 = massimo dolore');
-    sub.style.cssText='font-size:13px;color:var(--text2);margin-bottom:14px';wrap.appendChild(sub);
+    var sub=mk('p','','0 = nessun dolore     10 = massimo dolore');sub.style.cssText='font-size:13px;color:var(--text2);margin-bottom:14px';wrap.appendChild(sub);
     var ng=mk('div','nrs-grid');
-    for(var i=0;i<=10;i++){
-      (function(val){
-        var btn=mk('button','nrs-btn'+(ST.data.nrs===val?' s'+val:''),String(val));
-        btn.addEventListener('click',function(){ST.data.nrs=val;renderStep();});
-        ng.appendChild(btn);
-      })(i);
-    }
+    for(var i=0;i<=10;i++){(function(val){var btn=mk('button','nrs-btn'+(ST.data.nrs===val?' s'+val:''),String(val));btn.addEventListener('click',function(){ST.data.nrs=val;renderStep();});ng.appendChild(btn);})(i);}
     wrap.appendChild(ng);
-    if(ST.data.nrs!==undefined){
-      var sb=buildScoreBar(ST.data.nrs,10,NRS_LABEL[ST.data.nrs],'');sb.style.marginTop='12px';wrap.appendChild(sb);
-    }
+    if(ST.data.nrs!==undefined){var sb=buildScoreBar(ST.data.nrs,10,NRS_LABEL[ST.data.nrs],'');sb.style.marginTop='12px';wrap.appendChild(sb);}
   }
-
-  // ── SSV ───────────────────────────────────────────────
   else if(sn==='SSV'){
     wrap.appendChild(mk('div','st','Subjective Shoulder Value (SSV)'));
-    var ssv_p=mk('p','','0 = spalla peggiore     100 = spalla normale');
-    ssv_p.style.cssText='font-size:13px;color:var(--text2);margin-bottom:16px';wrap.appendChild(ssv_p);
+    var ssv_p=mk('p','','0 = spalla peggiore     100 = spalla normale');ssv_p.style.cssText='font-size:13px;color:var(--text2);margin-bottom:16px';wrap.appendChild(ssv_p);
     var ssvRow=mk('div','ssv-row');
-    var ssvR=document.createElement('input');ssvR.type='range';ssvR.min='0';ssvR.max='100';ssvR.step='1';
-    ssvR.value=String(ST.data.ssv!==undefined?ST.data.ssv:50);ssvR.id='ssv-r';
+    var ssvR=document.createElement('input');ssvR.type='range';ssvR.min='0';ssvR.max='100';ssvR.step='1';ssvR.value=String(ST.data.ssv!==undefined?ST.data.ssv:50);ssvR.id='ssv-r';
     var ssvN=mk('div','ssv-num',ssvR.value);ssvN.id='ssv-v';
     ssvR.addEventListener('input',function(){ST.data.ssv=parseInt(this.value);ssvN.textContent=this.value;});
     ssvRow.appendChild(ssvR);ssvRow.appendChild(ssvN);wrap.appendChild(ssvRow);
   }
-
-  // ── QUESTIONARI ───────────────────────────────────────
   else if(sn==='OSS'){
     wrap.appendChild(mk('div','st','Oxford Shoulder Score - ultimo mese (0-48)'));
     OSS_Q.forEach(function(q,i){wrap.appendChild(buildQBlock('oss',i,q,OSS_O[i]));});
@@ -703,70 +622,47 @@ function buildStepContent(sn){
     KO_SECS.forEach(function(sec){wrap.appendChild(mk('div','wsec',sec.label));sec.q.forEach(function(q,i){wrap.appendChild(buildQBlock('ko'+sec.k,i,q,sec.o(i)));});});
     var live5=mk('div','score-live');var sc5=calcKO();if(sc5)live5.appendChild(buildDomains([{n:'Symptoms',v:sc5.sym},{n:'Pain',v:sc5.pain},{n:'ADL',v:sc5.adl},{n:'Sport',v:sc5.sport},{n:'QOL',v:sc5.qol},{n:'Media',v:sc5.total,hi:true}]));wrap.appendChild(live5);
   }
-
-  // ── RIEPILOGO ─────────────────────────────────────────
-  else if(sn==='Riepilogo'){
-    wrap.appendChild(buildRiepilogo());
-  }
-
+  else if(sn==='Riepilogo'){wrap.appendChild(buildRiepilogo());}
   return wrap;
 }
 
-// ── Field helpers ──────────────────────────────────────────
 function buildField(label,id,type,value,placeholder,required){
-  var f=mk('div','field');
-  if(label){var lbl=mk('label','',label);if(required)lbl.appendChild(mk('span','req',' *'));f.appendChild(lbl);}
-  var inp=document.createElement('input');inp.type=type;inp.id=id;inp.value=value;if(placeholder)inp.placeholder=placeholder;
-  f.appendChild(inp);return f;
+  var f=mk('div','field');if(label){var lbl=mk('label','',label);if(required)lbl.appendChild(mk('span','req',' *'));f.appendChild(lbl);}
+  var inp=document.createElement('input');inp.type=type;inp.id=id;inp.value=value;if(placeholder)inp.placeholder=placeholder;f.appendChild(inp);return f;
 }
 function buildNumField(label,id,value,placeholder){
-  var f=mk('div','field');
-  if(label)f.appendChild(mk('label','',label));
-  var inp=document.createElement('input');inp.type='number';inp.id=id;inp.value=value!==undefined&&value!==''?value:'';inp.placeholder=placeholder||'';inp.step='any';inp.min='0';
-  f.appendChild(inp);return f;
+  var f=mk('div','field');if(label)f.appendChild(mk('label','',label));
+  var inp=document.createElement('input');inp.type='number';inp.id=id;inp.value=value!==undefined&&value!==''?value:'';inp.placeholder=placeholder||'';inp.step='any';inp.min='0';f.appendChild(inp);return f;
 }
 function buildSelectField(label,id,values,labels,selected,required){
-  var f=mk('div','field');
-  if(label){var lbl=mk('label','',label);if(required)lbl.appendChild(mk('span','req',' *'));f.appendChild(lbl);}
+  var f=mk('div','field');if(label){var lbl=mk('label','',label);if(required)lbl.appendChild(mk('span','req',' *'));f.appendChild(lbl);}
   var sel=document.createElement('select');sel.id=id;
   values.forEach(function(v,i){var opt=document.createElement('option');opt.value=v;opt.textContent=labels[i];if(v===selected)opt.selected=true;sel.appendChild(opt);});
   f.appendChild(sel);return f;
 }
 
-// ── Riepilogo ──────────────────────────────────────────────
 function buildRiepilogo(){
   var d=ST.data,p=ST.proc,sede=d.sede||'-',q=QUESTIONARI[sede]||[];
-  var wrap=mk('div','');
-  wrap.appendChild(mk('div','st','Riepilogo'));
+  var wrap=mk('div','');wrap.appendChild(mk('div','st','Riepilogo'));
   var hdr=mk('div','rh');
-  var nm=mk('div','');nm.style.cssText='font-size:16px;font-weight:700;margin-bottom:6px';
-  nm.textContent=(d.cognome||'-')+' '+(d.nome||'');hdr.appendChild(nm);
+  var nm=mk('div','');nm.style.cssText='font-size:16px;font-weight:700;margin-bottom:6px';nm.textContent=(d.cognome||'-')+' '+(d.nome||'');hdr.appendChild(nm);
   var meta=mk('div','');meta.style.cssText='font-size:13px;color:var(--text2);display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:2px';
   meta.appendChild(document.createTextNode((d.sesso||'-')+' - '+(d.dob||'-')));
   meta.appendChild(mk('span','badge '+(SBADGE[sede]||'b-gray'),sede));
   if(d.lato)meta.appendChild(mk('span','badge b-purple',d.lato));
   meta.appendChild(mk('span','badge b-gray',d.patologia||'-'));
-  meta.appendChild(mk('span','badge '+(isProcedura()?'b-teal':'b-gray'),d.timing||'-'));
+  meta.appendChild(mk('span','badge '+(isProc()?'b-teal':'b-gray'),d.timing||'-'));
   hdr.appendChild(meta);wrap.appendChild(hdr);
-
-  function addRow(k,v,sub){
-    var row=mk('div','rr');row.appendChild(mk('span','rk',k));
-    var vd=mk('div','');vd.appendChild(mk('div','rv',String(v||'-')));
-    if(sub)vd.appendChild(mk('div','rs',sub));row.appendChild(vd);wrap.appendChild(row);
-  }
-
-  if(isProcedura()){
+  function addRow(k,v,sub){var row=mk('div','rr');row.appendChild(mk('span','rk',k));var vd=mk('div','');vd.appendChild(mk('div','rv',String(v||'-')));if(sub)vd.appendChild(mk('div','rs',sub));row.appendChild(vd);wrap.appendChild(row);}
+  if(isProc()){
     wrap.appendChild(mk('div','wsec','Dati procedura'));
-    addRow('Data procedura',p.data_procedura||'-');
-    addRow('Accesso vascolare',p.accesso||'-');
-    addRow('Successo tecnico',p.successo||'-');
+    addRow('Data procedura',p.data_procedura||'-');addRow('Accesso vascolare',p.accesso||'-');addRow('Successo tecnico',p.successo||'-');
     addRow('N. arterie trattate',p.arterie!==undefined&&p.arterie!==''?p.arterie:'-');
     addRow('Volume IPM/CS (ml)',p.volume_ml!==undefined&&p.volume_ml!==''?p.volume_ml+' ml':'-');
     addRow('Durata',p.durata_min!==undefined&&p.durata_min!==''?p.durata_min+' min':'-');
     if(sede==='Ginocchio'){addRow('Kellgren-Lawrence',p.kl!==undefined&&p.kl!==''?'KL '+p.kl:'-');addRow('Pregresso intervento',p.pregresso_intervento||'-');}
     if(sede==='Anca')addRow('Diagnosi specifica',p.diagnosi_specifica||'-');
-    addRow('Fibromialgia',p.fibromialgia||'-');
-    addRow('Complicanze',p.complicanze||'Nessuna');
+    addRow('Fibromialgia',p.fibromialgia||'-');addRow('Complicanze',p.complicanze||'Nessuna');
     if(p.note)addRow('Note',p.note);
   } else {
     wrap.appendChild(mk('div','wsec','Scale di valutazione'));
@@ -788,15 +684,13 @@ function validate(){
     var cog=(($id('f-cog')||{}).value||'').trim(),nom=(($id('f-nom')||{}).value||'').trim(),ses=($id('f-ses')||{}).value||'';
     if(!cog||!nom||!ses){showAlert('Cognome, nome e sesso sono obbligatori.');return false;}
     ST.data.cognome=cog;ST.data.nome=nom;ST.data.sesso=ses;
-    ST.data.dob=($id('f-dob')||{}).value||'';ST.data.dateval=($id('f-dat')||{}).value||'';
-    return true;
+    ST.data.dob=($id('f-dob')||{}).value||'';ST.data.dateval=($id('f-dat')||{}).value||'';return true;
   }
   if(sn==='Distretto & timing'){
     ST.data.patologia=($id('f-pat')||{}).value||'';
     if(!ST.data.sede){showAlert('Seleziona un distretto.');return false;}
     if(!ST.data.lato){showAlert('Seleziona il lato.');return false;}
-    if(!ST.data.timing){showAlert('Seleziona il timing.');return false;}
-    return true;
+    if(!ST.data.timing){showAlert('Seleziona il timing.');return false;}return true;
   }
   if(sn==='Procedura'){
     var dp=$id('p-datproc');if(dp)ST.proc.data_procedura=dp.value||'';
@@ -807,8 +701,7 @@ function validate(){
     var pr=$id('p-pregresso');if(pr)ST.proc.pregresso_intervento=pr.value||'';
     var nt=$id('p-note');if(nt)ST.proc.note=nt.value||'';
     if(!ST.proc.accesso){showAlert('Seleziona l\'accesso vascolare.');return false;}
-    if(!ST.proc.successo){showAlert('Indica il successo tecnico.');return false;}
-    return true;
+    if(!ST.proc.successo){showAlert('Indica il successo tecnico.');return false;}return true;
   }
   if(sn==='NRS'&&ST.data.nrs===undefined){showAlert('Seleziona il punteggio NRS.');return false;}
   if(sn==='SSV'){var sv=$id('ssv-r');if(sv)ST.data.ssv=parseInt(sv.value);return true;}
@@ -819,13 +712,10 @@ function validate(){
   if(sn==='KOOS'&&!calcKO()){showAlert('Compila tutte le 42 domande KOOS.');return false;}
   return true;
 }
-
 function goStep(n){
-  var steps=getSteps();
-  if(n<0||n>=steps.length)return;
+  var steps=getSteps();if(n<0||n>=steps.length)return;
   if(n>ST.step&&!validate())return;
-  ST.step=n;renderStep();
-  $id('form-card').scrollIntoView({behavior:'smooth',block:'start'});
+  ST.step=n;renderStep();$id('form-card').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ── CALCOLI ────────────────────────────────────────────────
@@ -840,50 +730,48 @@ function calcKO(){var avg=function(pre,n){var v=[];for(var i=0;i<n;i++){if(ST.an
 async function submitForm(){
   var d=ST.data,p=ST.proc,q=QUESTIONARI[d.sede]||[];
   var dm=calcOESD(),wo=calcWO(),ko=calcKO(),qd=calcQD();
-  var isProc=isProcedura();
+  var ip=isProc();
   var rec={
     id:ST.editingId||('P'+Date.now()),
     cognome:d.cognome,nome:d.nome,sesso:d.sesso,dob:d.dob,
-    dateval:isProc?(p.data_procedura||d.dateval||today()):d.dateval,
+    dateval:ip?(p.data_procedura||d.dateval||today()):d.dateval,
     sede:d.sede,lato:d.lato||'',patologia:d.patologia||'',timing:d.timing,
-    // NRS e scores — vuoti se procedura
-    nrs:isProc?'':d.nrs,
-    ssv:(!isProc&&q.indexOf('SSV')>=0&&d.ssv!==undefined)?d.ssv:'',
-    oss:(!isProc&&q.indexOf('OSS')>=0&&calcOSS()!==null)?calcOSS():'',
-    quickdash:(!isProc&&q.indexOf('QuickDASH')>=0&&qd!==null)?parseFloat(qd.toFixed(2)):'',
-    oes_total:(!isProc&&q.indexOf('OES')>=0&&dm)?parseFloat(((dm.f+dm.p+dm.s)/3).toFixed(2)):'',
-    oes_func:(!isProc&&q.indexOf('OES')>=0&&dm)?parseFloat(dm.f.toFixed(2)):'',
-    oes_pain:(!isProc&&q.indexOf('OES')>=0&&dm)?parseFloat(dm.p.toFixed(2)):'',
-    oes_soc:(!isProc&&q.indexOf('OES')>=0&&dm)?parseFloat(dm.s.toFixed(2)):'',
-    womac_D:(!isProc&&q.indexOf('WOMAC')>=0&&wo)?wo.D:'',womac_R:(!isProc&&q.indexOf('WOMAC')>=0&&wo)?wo.R:'',
-    womac_F:(!isProc&&q.indexOf('WOMAC')>=0&&wo)?wo.F:'',womac_tot:(!isProc&&q.indexOf('WOMAC')>=0&&wo)?wo.tot:'',
-    womac_pct:(!isProc&&q.indexOf('WOMAC')>=0&&wo)?parseFloat(wo.pct.toFixed(2)):'',
-    koos_sym:(!isProc&&q.indexOf('KOOS')>=0&&ko)?ko.sym:'',koos_pain:(!isProc&&q.indexOf('KOOS')>=0&&ko)?ko.pain:'',
-    koos_adl:(!isProc&&q.indexOf('KOOS')>=0&&ko)?ko.adl:'',koos_sport:(!isProc&&q.indexOf('KOOS')>=0&&ko)?ko.sport:'',
-    koos_qol:(!isProc&&q.indexOf('KOOS')>=0&&ko)?ko.qol:'',koos_total:(!isProc&&q.indexOf('KOOS')>=0&&ko)?ko.total:'',
-    // Procedura — vuoti se non procedura
-    data_procedura:isProc?(p.data_procedura||''):'',
-    proc_accesso:isProc?(p.accesso||''):'',proc_arterie:isProc&&p.arterie!==undefined?p.arterie:'',
-    proc_volume_ml:isProc&&p.volume_ml!==undefined?p.volume_ml:'',proc_durata_min:isProc&&p.durata_min!==undefined?p.durata_min:'',
-    proc_successo:isProc?(p.successo||''):'',proc_complicanze:isProc?(p.complicanze||'Nessuna'):'',
-    proc_note:isProc?(p.note||''):'',proc_kl:isProc&&p.kl!==undefined?p.kl:'',
-    proc_pregresso_intervento:isProc?(p.pregresso_intervento||''):'',
-    proc_fibromialgia:isProc?(p.fibromialgia||''):'',proc_diagnosi_specifica:isProc?(p.diagnosi_specifica||''):''
+    nrs:ip?'':d.nrs,
+    ssv:(!ip&&q.indexOf('SSV')>=0&&d.ssv!==undefined)?d.ssv:'',
+    oss:(!ip&&q.indexOf('OSS')>=0&&calcOSS()!==null)?calcOSS():'',
+    quickdash:(!ip&&q.indexOf('QuickDASH')>=0&&qd!==null)?parseFloat(qd.toFixed(2)):'',
+    oes_total:(!ip&&q.indexOf('OES')>=0&&dm)?parseFloat(((dm.f+dm.p+dm.s)/3).toFixed(2)):'',
+    oes_func:(!ip&&q.indexOf('OES')>=0&&dm)?parseFloat(dm.f.toFixed(2)):'',
+    oes_pain:(!ip&&q.indexOf('OES')>=0&&dm)?parseFloat(dm.p.toFixed(2)):'',
+    oes_soc:(!ip&&q.indexOf('OES')>=0&&dm)?parseFloat(dm.s.toFixed(2)):'',
+    womac_D:(!ip&&q.indexOf('WOMAC')>=0&&wo)?wo.D:'',womac_R:(!ip&&q.indexOf('WOMAC')>=0&&wo)?wo.R:'',
+    womac_F:(!ip&&q.indexOf('WOMAC')>=0&&wo)?wo.F:'',womac_tot:(!ip&&q.indexOf('WOMAC')>=0&&wo)?wo.tot:'',
+    womac_pct:(!ip&&q.indexOf('WOMAC')>=0&&wo)?parseFloat(wo.pct.toFixed(2)):'',
+    koos_sym:(!ip&&q.indexOf('KOOS')>=0&&ko)?ko.sym:'',koos_pain:(!ip&&q.indexOf('KOOS')>=0&&ko)?ko.pain:'',
+    koos_adl:(!ip&&q.indexOf('KOOS')>=0&&ko)?ko.adl:'',koos_sport:(!ip&&q.indexOf('KOOS')>=0&&ko)?ko.sport:'',
+    koos_qol:(!ip&&q.indexOf('KOOS')>=0&&ko)?ko.qol:'',koos_total:(!ip&&q.indexOf('KOOS')>=0&&ko)?ko.total:'',
+    data_procedura:ip?(p.data_procedura||''):'',
+    proc_accesso:ip?(p.accesso||''):'',proc_arterie:ip&&p.arterie!==undefined?p.arterie:'',
+    proc_volume_ml:ip&&p.volume_ml!==undefined?p.volume_ml:'',proc_durata_min:ip&&p.durata_min!==undefined?p.durata_min:'',
+    proc_successo:ip?(p.successo||''):'',proc_complicanze:ip?(p.complicanze||'Nessuna'):'',
+    proc_note:ip?(p.note||''):'',proc_kl:ip&&p.kl!==undefined?p.kl:'',
+    proc_pregresso_intervento:ip?(p.pregresso_intervento||''):'',
+    proc_fibromialgia:ip?(p.fibromialgia||''):'',proc_diagnosi_specifica:ip?(p.diagnosi_specifica||''):''
   };
-
   var btn=$id('submit-btn');
   if(btn){btn.disabled=true;btn.textContent='Salvataggio...';}
   setSS('spin','salvataggio...');
-
   try{
     var isEdit=!!ST.editingId;
-    if(isEdit){await gsUpdate(rec);var idx=-1;for(var i=0;i<allPatients.length;i++){if(allPatients[i].id===rec.id){idx=i;break;}}if(idx>=0)allPatients[idx]=normalizeRecord(rec);else allPatients.push(normalizeRecord(rec));}
-    else{await gsWrite(rec);allPatients.push(normalizeRecord(rec));}
+    var action=isEdit?'update':'write';
+    var res=await apiPost({action:action,record:rec});
+    if(!res||res.status!=='ok')throw new Error(res?res.data:'errore');
+    if(isEdit){var idx=-1;for(var i=0;i<allPatients.length;i++){if(allPatients[i].id===rec.id){idx=i;break;}}if(idx>=0)allPatients[idx]=normalizeRecord(rec);else allPatients.push(normalizeRecord(rec));}
+    else{allPatients.push(normalizeRecord(rec));}
     updateCnt(allPatients.length);
     ST={step:0,data:{},proc:{},answers:{},editingId:null};
     $id('edit-banner-wrap').innerHTML='';
-    renderStep();
-    setSS('ok',allPatients.length+' record');
+    renderStep();setSS('ok',allPatients.length+' record');
     showAlert(rec.cognome+' '+rec.nome+(isEdit?' aggiornato':' archiviato')+' — '+rec.timing,'ok');
   }catch(e){
     setSS('err','errore');showAlert('Errore: '+(e.message||e));
@@ -905,70 +793,36 @@ function renderList(){
   var q=(($id('search-input')||{}).value||'').toLowerCase().trim();
   var sedi=['Tutti','Spalla','Gomito','Mano','Anca','Ginocchio','Piede'];
   var fb=$id('filter-bar');fb.innerHTML='';
-  sedi.forEach(function(s){
-    var btn=mk('button','f-btn'+(filterSede===s?' active':''),s);
-    btn.addEventListener('click',function(){filterSede=s;renderList();});fb.appendChild(btn);
-  });
+  sedi.forEach(function(s){var btn=mk('button','f-btn'+(filterSede===s?' active':''),s);btn.addEventListener('click',function(){filterSede=s;renderList();});fb.appendChild(btn);});
   var filtered=filterSede==='Tutti'?allPatients:allPatients.filter(function(p){return p.sede===filterSede;});
   if(q)filtered=filtered.filter(function(p){return((p.cognome||'')+' '+(p.nome||'')).toLowerCase().indexOf(q)>=0;});
-  // Ordina: per paziente poi per timing
-  filtered=filtered.slice().sort(function(a,b){
-    var na=(a.cognome+a.nome).localeCompare(b.cognome+b.nome);
-    if(na!==0)return na;
-    return TIMING_ORDER.indexOf(a.timing)-TIMING_ORDER.indexOf(b.timing);
-  });
+  filtered=filtered.slice().sort(function(a,b){var na=((a.cognome||'')+(a.nome||'')).localeCompare((b.cognome||'')+(b.nome||''));if(na!==0)return na;return TIMING_ORDER.indexOf(a.timing)-TIMING_ORDER.indexOf(b.timing);});
   var pl=$id('patient-list');pl.innerHTML='';
   if(!filtered.length){pl.appendChild(mk('div','empty','Nessun record trovato'));return;}
-
-  // Raggruppa per paziente visivamente
   var lastPat='';
   filtered.forEach(function(p){
-    var patKey=(p.cognome||'')+' '+(p.nome||'');
-    var isProc=p.timing==='Procedura';
+    var patKey=((p.cognome||'')+' '+(p.nome||'')).trim();
+    var ip=p.timing==='Procedura';
     var row=mk('div','p-row');
-    var initLetter=((p.cognome||'?')[0]).toUpperCase();
-    var av=mk('div',isProc?'avatar proc':'avatar',isProc?'P':initLetter);
+    var av=mk('div',ip?'avatar proc':'avatar',ip?'P':((p.cognome||'?')[0]).toUpperCase());
     var info=mk('div','p-info');
-    // Nome solo se cambio paziente
-    if(patKey!==lastPat){
-      info.appendChild(mk('div','p-name',patKey));lastPat=patKey;
-    }
+    if(patKey!==lastPat){info.appendChild(mk('div','p-name',patKey));lastPat=patKey;}
     var meta=mk('div','p-meta');
     meta.appendChild(document.createTextNode((p.dateval||'-')+'  '));
     meta.appendChild(mk('span','badge '+(SBADGE[p.sede]||'b-gray'),p.sede));
     if(p.lato)meta.appendChild(mk('span','badge b-purple',p.lato));
-    // Timing badge
-    var timingCls=isProc?'b-teal':'b-gray';
-    meta.appendChild(mk('span','badge '+timingCls,p.timing||'-'));
+    meta.appendChild(mk('span','badge '+(ip?'b-teal':'b-gray'),p.timing||'-'));
     info.appendChild(meta);
-    // Scores / proc data
     var tags=[];
-    if(isProc){
-      if(p.proc_accesso)tags.push('Acc. '+p.proc_accesso);
-      if(p.proc_arterie!==''&&p.proc_arterie!==undefined&&p.proc_arterie!==null)tags.push(p.proc_arterie+' art.');
-      if(p.proc_volume_ml!==''&&p.proc_volume_ml!==undefined&&p.proc_volume_ml!==null)tags.push(p.proc_volume_ml+' ml');
-      if(p.proc_successo)tags.push('Succ.: '+p.proc_successo);
-    } else {
-      if(p.nrs!==''&&p.nrs!==undefined&&p.nrs!==null)tags.push('NRS '+p.nrs);
-      if(p.ssv!==''&&p.ssv!==undefined&&p.ssv!==null)tags.push('SSV '+p.ssv);
-      if(p.oss!==''&&p.oss!==undefined&&p.oss!==null)tags.push('OSS '+p.oss+'/48');
-      if(p.quickdash!==''&&p.quickdash!==undefined&&p.quickdash!==null)tags.push('QD '+p.quickdash);
-      if(p.oes_total!==''&&p.oes_total!==undefined&&p.oes_total!==null)tags.push('OES '+p.oes_total);
-      if(p.womac_pct!==''&&p.womac_pct!==undefined&&p.womac_pct!==null)tags.push('WOMAC '+p.womac_pct+'%');
-      if(p.koos_total!==''&&p.koos_total!==undefined&&p.koos_total!==null)tags.push('KOOS '+p.koos_total);
-    }
+    if(ip){if(p.proc_accesso)tags.push('Acc. '+p.proc_accesso);if(p.proc_arterie!==''&&p.proc_arterie!==undefined&&p.proc_arterie!==null)tags.push(p.proc_arterie+' art.');if(p.proc_volume_ml!==''&&p.proc_volume_ml!==undefined&&p.proc_volume_ml!==null)tags.push(p.proc_volume_ml+' ml');if(p.proc_successo)tags.push('Succ.:'+p.proc_successo);}
+    else{if(p.nrs!==''&&p.nrs!==undefined&&p.nrs!==null)tags.push('NRS '+p.nrs);if(p.ssv!==''&&p.ssv!==undefined&&p.ssv!==null)tags.push('SSV '+p.ssv);if(p.oss!==''&&p.oss!==undefined&&p.oss!==null)tags.push('OSS '+p.oss+'/48');if(p.quickdash!==''&&p.quickdash!==undefined&&p.quickdash!==null)tags.push('QD '+p.quickdash);if(p.oes_total!==''&&p.oes_total!==undefined&&p.oes_total!==null)tags.push('OES '+p.oes_total);if(p.womac_pct!==''&&p.womac_pct!==undefined&&p.womac_pct!==null)tags.push('WOMAC '+p.womac_pct+'%');if(p.koos_total!==''&&p.koos_total!==undefined&&p.koos_total!==null)tags.push('KOOS '+p.koos_total);}
     if(tags.length)info.appendChild(mk('div','p-scores',tags.join(' · ')));
     var actions=mk('div','');actions.style.display='flex';actions.style.gap='4px';
     var editBtn=mk('button','btn btn-xs btn-amber','Modifica');
     var delBtn=mk('button','btn btn-xs btn-danger','X');
-    (function(pid){
-      editBtn.addEventListener('click',function(e){e.stopPropagation();startEdit(pid);});
-      delBtn.addEventListener('click',function(e){e.stopPropagation();delPt(pid);});
-      row.addEventListener('click',function(){openDetail(pid);});
-    })(p.id);
+    (function(pid){editBtn.addEventListener('click',function(e){e.stopPropagation();startEdit(pid);});delBtn.addEventListener('click',function(e){e.stopPropagation();delPt(pid);});row.addEventListener('click',function(){openDetail(pid);});})(p.id);
     actions.appendChild(editBtn);actions.appendChild(delBtn);
-    row.appendChild(av);row.appendChild(info);row.appendChild(actions);
-    pl.appendChild(row);
+    row.appendChild(av);row.appendChild(info);row.appendChild(actions);pl.appendChild(row);
   });
 }
 
@@ -976,9 +830,8 @@ function startEdit(id){
   var p=null;for(var i=0;i<allPatients.length;i++){if(allPatients[i].id===id){p=allPatients[i];break;}}if(!p)return;
   ST.editingId=p.id;
   ST.data={cognome:p.cognome||'',nome:p.nome||'',sesso:p.sesso||'',dob:p.dob||'',dateval:p.dateval||today(),sede:p.sede||'',lato:p.lato||'',patologia:p.patologia||'',timing:p.timing||'',nrs:p.nrs!==''&&p.nrs!==undefined?Number(p.nrs):undefined,ssv:p.ssv!==''&&p.ssv!==undefined?Number(p.ssv):undefined};
-  ST.proc={data_procedura:p.data_procedura||'',accesso:p.proc_accesso||'',arterie:p.proc_arterie!==''?Number(p.proc_arterie):undefined,volume_ml:p.proc_volume_ml!==''?Number(p.proc_volume_ml):undefined,durata_min:p.proc_durata_min!==''?Number(p.proc_durata_min):undefined,successo:p.proc_successo||'',complicanze:p.proc_complicanze||'',note:p.proc_note||'',kl:p.proc_kl!==''&&p.proc_kl!==undefined?Number(p.proc_kl):undefined,pregresso_intervento:p.proc_pregresso_intervento||'',fibromialgia:p.proc_fibromialgia||'',diagnosi_specifica:p.proc_diagnosi_specifica||''};
-  ST.answers={};ST.step=0;
-  showTab('form');renderStep();
+  ST.proc={data_procedura:p.data_procedura||'',accesso:p.proc_accesso||'',arterie:p.proc_arterie!==''&&p.proc_arterie!==undefined?Number(p.proc_arterie):undefined,volume_ml:p.proc_volume_ml!==''&&p.proc_volume_ml!==undefined?Number(p.proc_volume_ml):undefined,durata_min:p.proc_durata_min!==''&&p.proc_durata_min!==undefined?Number(p.proc_durata_min):undefined,successo:p.proc_successo||'',complicanze:p.proc_complicanze||'',note:p.proc_note||'',kl:p.proc_kl!==''&&p.proc_kl!==undefined?Number(p.proc_kl):undefined,pregresso_intervento:p.proc_pregresso_intervento||'',fibromialgia:p.proc_fibromialgia||'',diagnosi_specifica:p.proc_diagnosi_specifica||''};
+  ST.answers={};ST.step=0;showTab('form');renderStep();
   showAlert('Modifica in corso. I questionari vanno ricompilati se necessario.','info');
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -987,10 +840,11 @@ async function delPt(id){
   if(!confirm('Eliminare questo record?'))return;
   setSS('spin','eliminazione...');
   try{
-    await gsDelete(id);
+    var res=await apiPost({action:'delete',id:id});
+    if(!res||res.status!=='ok')throw new Error(res?res.data:'errore');
     allPatients=allPatients.filter(function(p){return p.id!==id;});
     updateCnt(allPatients.length);setSS('ok',allPatients.length+' record');renderList();
-  }catch(e){setSS('err','errore');showAlert('Errore eliminazione.');}
+  }catch(e){setSS('err','errore');showAlert('Errore eliminazione: '+(e.message||e));}
 }
 
 // ── DETAIL / STAMPA ────────────────────────────────────────
@@ -1005,38 +859,32 @@ function openDetail(id){
   $id('detail-overlay').classList.remove('hidden');
   $id('detail-overlay').addEventListener('click',function(e){if(e.target===this)this.classList.add('hidden');});
 }
-
 function printDetail(){
   var body=$id('detail-body').innerHTML,title=$id('detail-title').textContent;
   var w=window.open('','_blank','width=800,height=700');
-  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+title+'</title><style>body{font-family:Arial,sans-serif;font-size:13px;color:#111;padding:24px;max-width:680px;margin:0 auto}.sc{background:#f5f5f5;border-radius:6px;padding:11px 14px;margin-bottom:8px;break-inside:avoid}.sc-t{font-size:10px;font-weight:700;text-transform:uppercase;color:#555;margin-bottom:4px}.sc-v{font-size:22px;font-weight:700}.sc-sub{font-size:11px;color:#777;margin-top:2px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}.d{background:#e8e8e8;border-radius:5px;padding:8px 10px}.d-n{font-size:10px;color:#666;text-transform:uppercase;font-weight:700}.d-v{font-size:18px;font-weight:700;margin-top:2px}table{width:100%;border-collapse:collapse;margin-top:6px}td{padding:5px 8px;border-bottom:1px solid #eee;font-size:12px}td:first-child{color:#555;width:40%}hr{border:none;border-top:1px solid #ddd;margin:14px 0}@page{margin:1.5cm}</style></head><body><h1>'+title+'</h1>'+body+'<scr'+'ipt>window.onload=function(){window.print();}<\/scr'+'ipt></body></html>');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+title+'</title><style>body{font-family:Arial,sans-serif;font-size:13px;color:#111;padding:24px;max-width:680px;margin:0 auto}.sc{background:#f5f5f5;border-radius:6px;padding:11px 14px;margin-bottom:8px;break-inside:avoid}.sc-t{font-size:10px;font-weight:700;text-transform:uppercase;color:#555;margin-bottom:4px}.sc-v{font-size:22px;font-weight:700}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}.d{background:#e8e8e8;border-radius:5px;padding:8px 10px}.d-n{font-size:10px;color:#666;text-transform:uppercase;font-weight:700}.d-v{font-size:18px;font-weight:700;margin-top:2px}table{width:100%;border-collapse:collapse;margin-top:6px}td{padding:5px 8px;border-bottom:1px solid #eee;font-size:12px}td:first-child{color:#555;width:40%}hr{border:none;border-top:1px solid #ddd;margin:14px 0}@page{margin:1.5cm}</style></head><body><h1>'+title+'</h1>'+body+'<scr'+'ipt>window.onload=function(){window.print();}<\/scr'+'ipt></body></html>');
   w.document.close();
 }
-
 function buildDetailHTML(p){
-  var isProc=p.timing==='Procedura';
-  var h='<div style="font-size:12px;color:#555;margin-bottom:12px;line-height:1.8">'+
-    '<b>'+(p.sesso||'-')+'</b> · nato/a '+(p.dob||'-')+'<br>'+
+  var ip=p.timing==='Procedura';
+  var h='<div style="font-size:12px;color:#555;margin-bottom:12px;line-height:1.8"><b>'+(p.sesso||'-')+'</b> · nato/a '+(p.dob||'-')+'<br>'+
     '<span style="background:#e6f1fb;color:#0c447c;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700">'+p.sede+'</span>';
   if(p.lato)h+=' <span style="background:#eeedfe;color:#534ab7;padding:2px 8px;border-radius:99px;font-size:11px">'+p.lato+'</span>';
-  h+=' <span style="background:#f2f1ee;padding:2px 8px;border-radius:99px;font-size:11px">'+(p.patologia||'-')+'</span>';
-  h+=' <span style="background:'+(isProc?'#e0f5ef":"color:#0f6e56':'#f2f1ee;color:#555')+';padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700">'+p.timing+'</span></div><hr>';
-
-  if(isProc){
-    h+='<div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#555;margin-bottom:8px">Dati procedura</div>';
-    h+='<table>';
+  h+=' <span style="background:#f2f1ee;padding:2px 8px;border-radius:99px;font-size:11px">'+(p.patologia||'-')+'</span>'+
+    ' <span style="background:'+(ip?'#e0f5ef;color:#0f6e56':'#f2f1ee;color:#555')+';padding:2px 8px;border-radius:99px;font-size:11px;font-weight:'+(ip?'700':'400')+'">'+p.timing+'</span></div><hr>';
+  if(ip){
+    h+='<div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#555;margin-bottom:8px">Dati procedura</div><table>';
     var rows=[['Data procedura',p.data_procedura||'-'],['Accesso vascolare',p.proc_accesso||'-'],['Successo tecnico',p.proc_successo||'-'],['N. arterie trattate',p.proc_arterie!==''&&p.proc_arterie!==undefined?p.proc_arterie:'-'],['Volume IPM/CS (ml)',p.proc_volume_ml!==''&&p.proc_volume_ml!==undefined?p.proc_volume_ml+' ml':'-'],['Durata',p.proc_durata_min!==''&&p.proc_durata_min!==undefined?p.proc_durata_min+' min':'-'],['Complicanze',p.proc_complicanze||'Nessuna'],['Fibromialgia',p.proc_fibromialgia||'-']];
     if(p.proc_kl!==''&&p.proc_kl!==undefined)rows.push(['Kellgren-Lawrence','KL '+p.proc_kl]);
     if(p.proc_pregresso_intervento)rows.push(['Pregresso intervento',p.proc_pregresso_intervento]);
     if(p.proc_diagnosi_specifica)rows.push(['Diagnosi specifica',p.proc_diagnosi_specifica]);
     if(p.proc_note)rows.push(['Note',p.proc_note]);
-    rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td></tr>';});
-    h+='</table>';
+    rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td></tr>';});h+='</table>';
   } else {
     var sc=function(title,val,max,sub,domains){
       if(val===''||val===null||val===undefined)return'';
       var d='';if(domains&&domains.length)d='<div class="grid">'+domains.map(function(x){return'<div class="d"><div class="d-n">'+x.n+'</div><div class="d-v">'+(typeof x.v==='number'?x.v.toFixed(1):x.v)+'</div></div>';}).join('')+'</div>';
-      return'<div class="sc"><div class="sc-t">'+title+'</div><div class="sc-v">'+val+(max?'<span style="font-size:14px;color:#777">/'+max+'</span>':'')+'</div>'+(sub?'<div class="sc-sub">'+sub+'</div>':'')+d+'</div>';
+      return'<div class="sc"><div class="sc-t">'+title+'</div><div class="sc-v">'+val+(max?'<span style="font-size:14px;color:#777">/'+max+'</span>':'')+'</div>'+(sub?'<div style="font-size:11px;color:#777;margin-top:2px">'+sub+'</div>':'')+d+'</div>';
     };
     if(p.nrs!==''&&p.nrs!==undefined)h+=sc('NRS — Dolore',p.nrs,10,NRS_LABEL[p.nrs]);
     if(p.ssv!==''&&p.ssv!==undefined)h+=sc('SSV',p.ssv,100);
@@ -1053,32 +901,24 @@ function buildDetailHTML(p){
 function populateTrendSelect(){
   var sel=$id('trend-sel'),cur=sel.value;
   var map={};
-  allPatients.forEach(function(p){
-    if(p.timing==='Procedura')return; // escludi record procedura dal trend
-    var key=(p.cognome||'')+' '+(p.nome||'')+'|'+p.sede;
-    if(!map[key])map[key]={label:(p.cognome||'')+' '+(p.nome||'')+' ('+p.sede+')',key:key};
-  });
+  allPatients.forEach(function(p){if(p.timing==='Procedura')return;var key=((p.cognome||'')+' '+(p.nome||'')).trim()+'|'+p.sede;if(!map[key])map[key]={label:((p.cognome||'')+' '+(p.nome||'')).trim()+' ('+p.sede+')',key:key};});
   sel.innerHTML='';var def=document.createElement('option');def.value='';def.textContent='— seleziona —';sel.appendChild(def);
   Object.values(map).forEach(function(m){var o=document.createElement('option');o.value=m.key;o.textContent=m.label;if(m.key===cur)o.selected=true;sel.appendChild(o);});
   if(!sel._ev){sel.addEventListener('change',renderTrend);sel._ev=true;}
   if(cur)renderTrend();
 }
-
 function renderTrend(){
   var val=$id('trend-sel').value,cont=$id('trend-content');
   if(!val){cont.innerHTML='';return;}
   var parts=val.split('|'),patname=parts[0],sede=parts[1];
-  var nameParts=patname.trim().split(' ');
-  var records=allPatients.filter(function(p){
-    return p.timing!=='Procedura'&&((p.cognome||'')+' '+(p.nome||'')).trim()===patname&&p.sede===sede;
-  });
+  var records=allPatients.filter(function(p){return p.timing!=='Procedura'&&((p.cognome||'')+' '+(p.nome||'')).trim()===patname&&p.sede===sede;});
   records.sort(function(a,b){return TIMING_ORDER.indexOf(a.timing)-TIMING_ORDER.indexOf(b.timing);});
   if(!records.length){cont.innerHTML='<div class="empty">Nessuna valutazione trovata</div>';return;}
   var timings=records.map(function(r){return r.timing;}),q=QUESTIONARI[sede]||[];
   var series=[];
   function addS(l,d,c,inv){series.push({label:l,data:d,color:c,inverted:!!inv});}
   if(records.some(function(r){return r.nrs!==''&&r.nrs!==undefined;}))addS('NRS (0-10)',records.map(function(r){return r.nrs!==''&&r.nrs!==undefined?Number(r.nrs):null;}),'#e24b4a',true);
-  if(q.indexOf('SSV')>=0&&records.some(function(r){return r.ssv!==''&&r.ssv!==undefined;}))addS('SSV (0-100)',records.map(function(r){return r.ssv!==''&&r.ssv!==undefined?Number(r.ssv):null;}),'#185fa5');
+  if(q.indexOf('SSV')>=0&&records.some(function(r){return r.ssv!==''&&r.ssv!==undefined;}))addS('SSV',records.map(function(r){return r.ssv!==''&&r.ssv!==undefined?Number(r.ssv):null;}),'#185fa5');
   if(q.indexOf('OSS')>=0&&records.some(function(r){return r.oss!==''&&r.oss!==undefined;}))addS('OSS (0-48)',records.map(function(r){return r.oss!==''&&r.oss!==undefined?Number(r.oss):null;}),'#3b6d11');
   if(q.indexOf('QuickDASH')>=0&&records.some(function(r){return r.quickdash!==''&&r.quickdash!==undefined;}))addS('QuickDASH',records.map(function(r){return r.quickdash!==''&&r.quickdash!==undefined?Number(r.quickdash):null;}),'#854f0b',true);
   if(q.indexOf('OES')>=0&&records.some(function(r){return r.oes_total!==''&&r.oes_total!==undefined;}))addS('OES (0-100)',records.map(function(r){return r.oes_total!==''&&r.oes_total!==undefined?Number(r.oes_total):null;}),'#534ab7');
@@ -1094,8 +934,7 @@ function renderTrend(){
   thead.appendChild(tr);table.appendChild(thead);
   var tbody=document.createElement('tbody');
   series.forEach(function(s){
-    var row=document.createElement('tr');
-    var td0=document.createElement('td');td0.textContent=s.label;td0.style.fontWeight='500';td0.style.whiteSpace='nowrap';row.appendChild(td0);
+    var row=document.createElement('tr');var td0=document.createElement('td');td0.textContent=s.label;td0.style.fontWeight='500';td0.style.whiteSpace='nowrap';row.appendChild(td0);
     var first=null,last=null;
     s.data.forEach(function(v){var td=document.createElement('td');td.className='td-r';td.textContent=v!==null?v.toFixed(1):'-';if(v!==null&&first===null)first=v;if(v!==null)last=v;row.appendChild(td);});
     var delta=(first!==null&&last!==null)?last-first:null;
@@ -1128,7 +967,7 @@ async function restoreJSON(input){
       if(!newPts.length){alert('Nessun record nuovo da importare.');return;}
       if(!confirm('Importare '+newPts.length+' record?'))return;
       setSS('spin','importazione...');
-      for(var i=0;i<newPts.length;i++){await gsWrite(newPts[i]);allPatients.push(normalizeRecord(newPts[i]));}
+      for(var i=0;i<newPts.length;i++){var res=await apiPost({action:'write',record:newPts[i]});if(res&&res.status==='ok')allPatients.push(normalizeRecord(newPts[i]));}
       updateCnt(allPatients.length);setSS('ok',allPatients.length+' record');renderList();alert(newPts.length+' record importati.');
     }catch(err){alert('Errore: '+err.message);}input.value='';
   };reader.readAsText(file);
@@ -1137,51 +976,14 @@ async function restoreJSON(input){
 // ── EXPORT EXCEL ───────────────────────────────────────────
 function exportExcel(){
   if(!allPatients.length){alert('Nessun record da esportare.');return;}
-  var rows=allPatients.map(function(p){return{
-    'ID':p.id,'Cognome':p.cognome,'Nome':p.nome,'Sesso':p.sesso,'Data nascita':p.dob,
-    'Data':p.dateval,'Sede':p.sede,'Lato':p.lato||'','Patologia':p.patologia,'Timing':p.timing,
-    'NRS (0-10)':p.nrs!==''&&p.nrs!==undefined?p.nrs:'',
-    'SSV (0-100)':p.ssv!==''&&p.ssv!==undefined?p.ssv:'',
-    'OSS (0-48)':p.oss!==''&&p.oss!==undefined?p.oss:'',
-    'QuickDASH (0-100)':p.quickdash!==''&&p.quickdash!==undefined?p.quickdash:'',
-    'OES Function':p.oes_func!==''&&p.oes_func!==undefined?p.oes_func:'',
-    'OES Pain':p.oes_pain!==''&&p.oes_pain!==undefined?p.oes_pain:'',
-    'OES Soc':p.oes_soc!==''&&p.oes_soc!==undefined?p.oes_soc:'',
-    'OES Totale':p.oes_total!==''&&p.oes_total!==undefined?p.oes_total:'',
-    'WOMAC Dolore (0-20)':p.womac_D!==''&&p.womac_D!==undefined?p.womac_D:'',
-    'WOMAC Rigidita (0-8)':p.womac_R!==''&&p.womac_R!==undefined?p.womac_R:'',
-    'WOMAC Funzione (0-68)':p.womac_F!==''&&p.womac_F!==undefined?p.womac_F:'',
-    'WOMAC Totale (0-96)':p.womac_tot!==''&&p.womac_tot!==undefined?p.womac_tot:'',
-    'WOMAC %':p.womac_pct!==''&&p.womac_pct!==undefined?p.womac_pct:'',
-    'KOOS Symptoms':p.koos_sym!==''&&p.koos_sym!==undefined?p.koos_sym:'',
-    'KOOS Pain':p.koos_pain!==''&&p.koos_pain!==undefined?p.koos_pain:'',
-    'KOOS ADL':p.koos_adl!==''&&p.koos_adl!==undefined?p.koos_adl:'',
-    'KOOS Sport':p.koos_sport!==''&&p.koos_sport!==undefined?p.koos_sport:'',
-    'KOOS QOL':p.koos_qol!==''&&p.koos_qol!==undefined?p.koos_qol:'',
-    'KOOS Media':p.koos_total!==''&&p.koos_total!==undefined?p.koos_total:'',
-    'Data procedura':p.data_procedura||'',
-    'Accesso':p.proc_accesso||'',
-    'N. arterie trattate':p.proc_arterie!==''&&p.proc_arterie!==undefined?p.proc_arterie:'',
-    'Volume IPM/CS (ml)':p.proc_volume_ml!==''&&p.proc_volume_ml!==undefined?p.proc_volume_ml:'',
-    'Durata (min)':p.proc_durata_min!==''&&p.proc_durata_min!==undefined?p.proc_durata_min:'',
-    'Successo tecnico':p.proc_successo||'',
-    'Complicanze':p.proc_complicanze||'',
-    'Fibromialgia':p.proc_fibromialgia||'',
-    'Kellgren-Lawrence':p.proc_kl!==''&&p.proc_kl!==undefined?p.proc_kl:'',
-    'Pregresso intervento':p.proc_pregresso_intervento||'',
-    'Diagnosi specifica':p.proc_diagnosi_specifica||'',
-    'Note procedura':p.proc_note||''
-  };});
+  var rows=allPatients.map(function(p){return{'ID':p.id,'Cognome':p.cognome,'Nome':p.nome,'Sesso':p.sesso,'Data nascita':p.dob,'Data':p.dateval,'Sede':p.sede,'Lato':p.lato||'','Patologia':p.patologia,'Timing':p.timing,'NRS (0-10)':p.nrs!==''&&p.nrs!==undefined?p.nrs:'','SSV (0-100)':p.ssv!==''&&p.ssv!==undefined?p.ssv:'','OSS (0-48)':p.oss!==''&&p.oss!==undefined?p.oss:'','QuickDASH (0-100)':p.quickdash!==''&&p.quickdash!==undefined?p.quickdash:'','OES Function':p.oes_func!==''&&p.oes_func!==undefined?p.oes_func:'','OES Pain':p.oes_pain!==''&&p.oes_pain!==undefined?p.oes_pain:'','OES Soc':p.oes_soc!==''&&p.oes_soc!==undefined?p.oes_soc:'','OES Totale':p.oes_total!==''&&p.oes_total!==undefined?p.oes_total:'','WOMAC Dolore':p.womac_D!==''&&p.womac_D!==undefined?p.womac_D:'','WOMAC Rigidita':p.womac_R!==''&&p.womac_R!==undefined?p.womac_R:'','WOMAC Funzione':p.womac_F!==''&&p.womac_F!==undefined?p.womac_F:'','WOMAC Totale':p.womac_tot!==''&&p.womac_tot!==undefined?p.womac_tot:'','WOMAC %':p.womac_pct!==''&&p.womac_pct!==undefined?p.womac_pct:'','KOOS Symptoms':p.koos_sym!==''&&p.koos_sym!==undefined?p.koos_sym:'','KOOS Pain':p.koos_pain!==''&&p.koos_pain!==undefined?p.koos_pain:'','KOOS ADL':p.koos_adl!==''&&p.koos_adl!==undefined?p.koos_adl:'','KOOS Sport':p.koos_sport!==''&&p.koos_sport!==undefined?p.koos_sport:'','KOOS QOL':p.koos_qol!==''&&p.koos_qol!==undefined?p.koos_qol:'','KOOS Media':p.koos_total!==''&&p.koos_total!==undefined?p.koos_total:'','Data procedura':p.data_procedura||'','Accesso':p.proc_accesso||'','N. arterie':p.proc_arterie!==''&&p.proc_arterie!==undefined?p.proc_arterie:'','Volume ml':p.proc_volume_ml!==''&&p.proc_volume_ml!==undefined?p.proc_volume_ml:'','Durata min':p.proc_durata_min!==''&&p.proc_durata_min!==undefined?p.proc_durata_min:'','Successo tecnico':p.proc_successo||'','Complicanze':p.proc_complicanze||'','Fibromialgia':p.proc_fibromialgia||'','KL':p.proc_kl!==''&&p.proc_kl!==undefined?p.proc_kl:'','Pregresso intervento':p.proc_pregresso_intervento||'','Diagnosi specifica':p.proc_diagnosi_specifica||'','Note procedura':p.proc_note||''};});
   var sheets={'Tutti':rows};
-  ['Spalla','Gomito','Mano','Anca','Ginocchio','Piede'].forEach(function(s){
-    var sub=rows.filter(function(_,i){return allPatients[i].sede===s;});if(sub.length)sheets[s]=sub;
-  });
+  ['Spalla','Gomito','Mano','Anca','Ginocchio','Piede'].forEach(function(s){var sub=rows.filter(function(_,i){return allPatients[i].sede===s;});if(sub.length)sheets[s]=sub;});
   var wb=buildXLSX(sheets);
   var blob=new Blob([wb],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
   var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='Registro_TAME_'+today()+'.xlsx';a.click();
   setTimeout(function(){URL.revokeObjectURL(url);},1000);
 }
-
 function buildXLSX(sheets){
   var sn=Object.keys(sheets);
   var ex=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
